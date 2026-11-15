@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certificados · Maker Faire Curitiba 2026</title>
+<meta name="description" content="Baixe ou verifique seu certificado da Maker Faire Curitiba 2026.">
+<meta name="robots" content="noindex">
+<style>
+  :root { --azul:#29A9E0; --azul-esc:#1B7FAF; --verm:#E20E17; --tinta:#1d1d1f; --cinza:#5b5b60; --linha:#e3e7ea; --fundo:#f4f8fb; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--fundo); color:var(--tinta);
+         font:16px/1.5 "Franklin Gothic Book","Franklin Gothic Medium","Segoe UI",Roboto,Arial,sans-serif; }
+  .moldura { max-width:640px; margin:32px auto; background:#fff; border:6px solid var(--azul); padding:32px 28px 28px; }
+  @media (max-width:520px){ .moldura{ margin:16px; padding:24px 18px; } }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  header img { width:150px; height:auto; display:block; }
+  .tag { background:var(--azul); color:#fff; font-weight:700; letter-spacing:.04em; padding:6px 12px; font-size:14px; }
+  h1 { color:var(--verm); font-size:40px; line-height:1.05; margin:28px 0 6px; letter-spacing:-.01em; }
+  p.sub { color:var(--cinza); margin:0 0 22px; }
+  label { display:block; font-weight:700; margin-bottom:6px; }
+  .linha { display:flex; gap:8px; }
+  input { flex:1; min-width:0; font:inherit; padding:12px 14px; border:2px solid var(--linha); border-radius:0; }
+  input:focus { outline:none; border-color:var(--azul); }
+  button { font:inherit; font-weight:700; background:var(--azul); color:#fff; border:0; padding:12px 18px; cursor:pointer; }
+  button:hover { background:var(--azul-esc); }
+  button:disabled { opacity:.6; cursor:wait; }
+  .msg { margin-top:16px; color:var(--cinza); min-height:1.5em; }
+  .msg.erro { color:var(--verm); }
+  .cert { border-top:1px solid var(--linha); padding:14px 0; display:flex; justify-content:space-between; gap:12px; align-items:center; }
+  .cert:first-child { border-top:0; }
+  .cert b { display:block; }
+  .cert small { color:var(--cinza); display:block; }
+  .cert a { white-space:nowrap; font-weight:700; color:#fff; background:var(--verm); padding:8px 12px; text-decoration:none; }
+  .ok { border-left:6px solid #2e9d4f; background:#f1faf3; padding:14px 16px; margin-top:8px; }
+  .ok b.nome { font-size:22px; display:block; }
+  .falha { border-left:6px solid var(--verm); background:#fdf1f1; padding:14px 16px; margin-top:8px; }
+  footer { margin-top:28px; padding-top:14px; border-top:1px solid var(--linha); font-size:13px; color:var(--cinza); }
+  .ajuda { margin-top:22px; border-top:1px solid var(--linha); padding-top:14px; }
+  .ajuda summary { cursor:pointer; font-weight:700; color:var(--azul-esc); }
+  .ajuda ul { padding-left:20px; color:var(--cinza); }
+  .ajuda li { margin:6px 0; }
+  .botao { display:inline-block; font-weight:700; color:#fff; background:var(--azul); padding:10px 14px; text-decoration:none; margin:4px 0 6px; }
+  .botao:hover { background:var(--azul-esc); }
+  .ajuda small { display:block; color:var(--cinza); }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main class="moldura">
+  <header>
+    <img src="mf.png" alt="Maker Faire Curitiba">
+    <span class="tag" id="tag">CERTIFICADOS 2026</span>
+  </header>
+
+  <section id="baixar">
+    <h1>Seu certificado</h1>
+    <p class="sub">Digite o e-mail usado na inscrição (Sympla ou formulário de makers) ou o código de acesso que a organização enviou. Aparecem todos os certificados ligados a ele.</p>
+    <form id="fEmail">
+      <label for="email">E-mail de inscrição ou código de acesso</label>
+      <div class="linha">
+        <input id="email" type="text" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required placeholder="voce@exemplo.com ou 0000-0000-0000">
+        <button id="bEmail">Buscar</button>
+      </div>
+    </form>
+    <div class="msg" id="mEmail" aria-live="polite"></div>
+    <div id="lista"></div>
+    <details class="ajuda" id="ajuda">
+      <summary>Não encontrei o meu certificado</summary>
+      <ul>
+        <li>Use o <b>mesmo e-mail da inscrição</b> (Sympla ou formulário de makers). Se a inscrição foi feita por outra pessoa da família ou do grupo, tente o e-mail dela: todos os certificados ligados a ele aparecem juntos.</li>
+        <li>Ministrantes e palestrantes sem e-mail cadastrado recebem um <b>código de acesso</b> de 12 dígitos da organização.</li>
+        <li>Inscrições reembolsadas não geram certificado.</li>
+      </ul>
+      <a class="botao" id="pedir" href="#">Pedir ajuda à organização</a>
+      <small>Abre um e-mail já preenchido para contato@makerfairecuritiba.com.br. Complete com seu nome e a atividade.</small>
+    </details>
+  </section>
+
+  <section id="verificar" hidden>
+    <h1>Verificação</h1>
+    <p class="sub">Confira se um certificado da Maker Faire Curitiba 2026 é autêntico.</p>
+    <form id="fCod">
+      <label for="cod">Código do certificado</label>
+      <div class="linha">
+        <input id="cod" required placeholder="MFC26-000-XXXX" autocapitalize="characters">
+        <button id="bCod">Verificar</button>
+      </div>
+    </form>
+    <div class="msg" id="mCod" aria-live="polite"></div>
+    <div id="res"></div>
+  </section>
+
+  <footer>
+    Maker Faire Curitiba 2026 · 5 e 6 de setembro · Universidade Positivo ·
+    <a href="#" id="troca">verificar um certificado</a><br>
+    Os dados ficam criptografados: só quem tem o e-mail ou o código consegue abri-los.
+  </footer>
+</main>
+
+<script>
+const SAL = 'mfc26-certificados-v1', ITER = 150000;
+const enc = new TextEncoder();
+const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+
+async function nomeArq(seg, uso) {
+  const base = await crypto.subtle.importKey('raw', enc.encode(seg), 'PBKDF2', false, ['deriveBits']);
+  return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(`${SAL}|${uso}|arquivo`), iterations: ITER }, base, 128));
+}
+async function chave(seg, uso) {
+  const base = await crypto.subtle.importKey('raw', enc.encode(seg), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(`${SAL}|${uso}`), iterations: ITER },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+}
+async function abrir(seg, uso) {
+  const r = await fetch(`${uso}/${await nomeArq(seg, uso)}.bin`, { cache: 'no-cache' });
+  if (!r.ok) return null;
+  const buf = new Uint8Array(await r.arrayBuffer());
+  const txt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.slice(0, 12) }, await chave(seg, uso), buf.slice(12));
+  return JSON.parse(new TextDecoder().decode(txt));
+}
+function el(tag, attrs = {}, ...filhos) {
+  const e = document.createElement(tag);
+  Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+  filhos.forEach(f => e.append(f));
+  return e;
+}
+function pdfUrl(b64) {
+  const bin = atob(b64), u = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return URL.createObjectURL(new Blob([u], { type: 'application/pdf' }));
+}
+
+const $ = id => document.getElementById(id);
+$('fEmail').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const bruto = $('email').value.trim().toLowerCase();
+  const email = bruto.includes('@') ? bruto : bruto.replace(/\D/g, '');  // código de acesso: só os dígitos
+  $('lista').replaceChildren(); $('mEmail').className = 'msg'; $('mEmail').textContent = 'Buscando…'; $('bEmail').disabled = true;
+  try {
+    const certs = await abrir(email, 'e');
+    if (!certs) {
+      $('mEmail').className = 'msg erro';
+      $('mEmail').textContent = 'Nenhum certificado encontrado. Confira se é o mesmo e-mail da inscrição (ou o código de acesso completo); se não achar, fale com a organização.';
+      return;
+    }
+    $('mEmail').textContent = certs.length === 1 ? '1 certificado encontrado.' : `${certs.length} certificados encontrados.`;
+    certs.forEach(c => $('lista').append(el('div', { class: 'cert' },
+      el('div', {}, el('b', {}, c.nome), el('small', {}, `${c.categoria} · ${c.atividade}`)),
+      el('a', { href: pdfUrl(c.pdf), download: `Certificado MFC26 - ${c.arquivo}` }, 'Baixar PDF'))));
+  } catch (e) {
+    $('mEmail').className = 'msg erro'; $('mEmail').textContent = 'Não foi possível abrir. Tente de novo em instantes.';
+  } finally { $('bEmail').disabled = false; }
+});
+
+async function verificar(cod) {
+  cod = cod.trim().toUpperCase();
+  $('res').replaceChildren(); $('mCod').textContent = 'Verificando…'; $('bCod').disabled = true;
+  try {
+    const c = await abrir(cod, 'v');
+    $('mCod').textContent = '';
+    $('res').append(c
+      ? el('div', { class: 'ok' }, 'Certificado válido, emitido para', el('b', { class: 'nome' }, c.nome),
+          `${c.categoria} · ${c.atividade}`, el('br'), el('small', {}, `Código ${c.codigo}`))
+      : el('div', { class: 'falha' }, `Nenhum certificado com o código ${cod}.`));
+  } catch (e) {
+    $('mCod').textContent = 'Não foi possível verificar. Tente de novo em instantes.';
+  } finally { $('bCod').disabled = false; }
+}
+$('fCod').addEventListener('submit', ev => { ev.preventDefault(); verificar($('cod').value); });
+
+$('pedir').addEventListener('click', ev => {
+  ev.preventDefault();
+  const tentou = $('email').value.trim();
+  const corpo = [
+    'Olá! Não encontrei meu certificado da Maker Faire Curitiba 2026.', '',
+    'Nome completo (como deve sair no certificado): ',
+    'Participei como (maker, ministrante, palestrante, participante de oficina, voluntário): ',
+    'Projeto, oficina ou palestra: ',
+    `E-mail ou código que tentei no site: ${tentou}`,
+    'E-mail usado na inscrição (se for outro): ', '', 'Obrigado(a)!'].join('\n');
+  location.href = 'mailto:contato@makerfairecuritiba.com.br?subject=' +
+    encodeURIComponent('Certificado MFC26 - não encontrei') + '&body=' + encodeURIComponent(corpo);
+});
+// quando a busca falha, abre a ajuda automaticamente
+new MutationObserver(() => { if ($('mEmail').classList.contains('erro')) $('ajuda').open = true; })
+  .observe($('mEmail'), { attributes: true, attributeFilter: ['class'] });
+
+function modo(v) {
+  $('verificar').hidden = !v; $('baixar').hidden = v;
+  $('tag').textContent = v ? 'VERIFICAÇÃO' : 'CERTIFICADOS 2026';
+  $('troca').textContent = v ? 'baixar meu certificado' : 'verificar um certificado';
+}
+$('troca').addEventListener('click', ev => { ev.preventDefault(); modo($('verificar').hidden); });
+const c = new URLSearchParams(location.search).get('c');
+if (c) { modo(true); $('cod').value = c; verificar(c); }
+</script>
+</body>
+</html>
